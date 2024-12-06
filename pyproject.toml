@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "spark-databums-conflict"
+version = "0.1.0"
+description = "Testing optional conflicting dependencies with poetry"
+authors = ["Martin Rueckl <martin.rueckl@codecentric.de>"]
+readme = "README.md"
+packages = [{ include = "databums", from = "src" }]
+
+[tool.poetry.scripts]
+databums = 'databums.main:main'
+
+[tool.poetry.dependencies]
+python = "^3.12"
+databricks-connect =    { version = "15.3.0", markers = "extra == 'databums' and extra != 'vanilla'" }
+pyspark            =    { version = "3.5.3",  markers = "extra == 'vanilla' and extra != 'databums'" }
+
+[tool.poetry.extras]
+databums = ["databricks-connect"]
+vanilla = ["pyspark"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
